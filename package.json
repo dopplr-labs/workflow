@@ -12,8 +12,7 @@
   },
   "workspaces": [
     "client",
-    "server",
-    "tail-kit"
+    "server"
   ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.31.0",

@@ -1,0 +1,3 @@
+[submodule "tail-kit"]
+	path = tail-kit
+	url = git://github.com/dopplr-labs/tail-kit
