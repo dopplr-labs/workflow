@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://himanshunagrath:windows@localhost:5432/workflow?schema=public"
+  url      = "postgresql://hnagrath09:windows@localhost:5432/workflow?schema=public"
 }
 
 generator client {
