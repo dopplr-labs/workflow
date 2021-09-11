@@ -1,0 +1,49 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://himanshunagrath:windows@localhost:5432/workflow?schema=public"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  profileImage String?
+  createdAt    DateTime @default(now())
+  Issue        Issue[]
+}
+
+model Issue {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  createdBy   User     @relation(fields: [userId], references: [id])
+  updatedAt   DateTime @updatedAt
+  status      Status
+  priorty     Priorty
+  subIssues   Issue[]  @relation("IssueToIssue")
+  Issue       Issue?   @relation("IssueToIssue", fields: [issueId], references: [id])
+  issueId     String?
+  userId      String
+}
+
+enum Status {
+  BACKLOG
+  TODO
+  INPROGRESS
+  INREVIEW
+  DONE
+  CANCELLED
+}
+
+enum Priorty {
+  NONE
+  URGENT
+  HIGH
+  MEDIUM
+  LOW
+}
