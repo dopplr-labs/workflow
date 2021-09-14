@@ -1,12 +1,6 @@
 import React from 'react'
-import { Button } from '@tail-kit/tail-kit'
+import AllIssues from 'pages/all-issues'
 
 export default function App() {
-  return (
-    <div>
-      <div className="flex items-center p-4 space-x-2">
-        <Button>Hello World</Button>
-      </div>
-    </div>
-  )
+  return <AllIssues />
 }
