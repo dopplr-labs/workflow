@@ -1,0 +1,100 @@
+openapi: 3.0.0
+paths:
+  /issues:
+    get:
+      operationId: IssuesController_getIssues
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: IssuesController_addIssue
+      parameters: []
+      responses:
+        '201':
+          description: ''
+  /issues/{id}:
+    get:
+      operationId: IssuesController_getIssue
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: IssuesController_deleteIssue
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+      responses:
+        '201':
+          description: ''
+  /auth/signup:
+    post:
+      operationId: AuthController_createUser
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: ''
+info:
+  title: Workflow API
+  description: ''
+  version: 1.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    LoginDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+          minLength: 4
+          maxLength: 20
+      required:
+        - email
+        - password
+    CreateUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+          minLength: 4
+          maxLength: 20
+      required:
+        - name
+        - email
+        - password
