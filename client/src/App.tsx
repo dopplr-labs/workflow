@@ -1,10 +1,11 @@
 import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { BrowserRouter, Routes, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Auth from 'components/auth'
-import Route from 'components/route'
+import AuthLayout from 'components/auth-layout'
 import AllIssues from 'pages/all-issues'
-import Login from 'pages/login/login'
+import Login from 'pages/login'
+import Signup from 'pages/signup'
 
 export default function App() {
   const queryClient = new QueryClient()
@@ -13,8 +14,12 @@ export default function App() {
       <BrowserRouter>
         <Auth>
           <Routes>
-            <Route isProtected path="/all-issues" element={<AllIssues />} />
+            <Route
+              path="/all-issues"
+              element={<AuthLayout component={AllIssues} />}
+            />
             <Route path="/login" element={<Login />} />
+            <Route path="/sign-up" element={<Signup />} />
             <Route path="*" element={<Navigate to="/all-issues" />} />
           </Routes>
         </Auth>

@@ -1,9 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthContext from 'contexts/auth-context'
-import { fetchUserProfile, fetchUserProfileByEmail } from 'queries/auth'
+import {
+  fetchUserProfile,
+  fetchUserProfileByEmail,
+  registerUserByEmail,
+} from 'queries/auth'
 import storage from 'utils/storage'
-import { LoginDto, UserWithoutSensitiveData } from 'api/api'
+import { CreateUserDto, LoginDto, UserWithoutSensitiveData } from 'api/api'
 
 type AuthProps = {
   children: React.ReactNode
@@ -19,9 +23,6 @@ export default function Auth({ children }: AuthProps) {
       try {
         const user = await fetchUserProfile()
         setUser(user)
-        if (!user) {
-          navigate('/login', { replace: true })
-        }
       } catch (err) {
         storage.remove(import.meta.env.VITE_AUTH_TOKEN)
         navigate('/login', { replace: true })
@@ -33,16 +34,9 @@ export default function Auth({ children }: AuthProps) {
   }, [])
 
   const signInWithEmail = useCallback(
-    async ({
-      email,
-      password,
-      rememberMe,
-    }: LoginDto & { rememberMe: boolean }) => {
+    async ({ rememberMe, ...loginDto }: LoginDto & { rememberMe: boolean }) => {
       try {
-        const { user, token } = await fetchUserProfileByEmail({
-          email,
-          password,
-        })
+        const { user, token } = await fetchUserProfileByEmail(loginDto)
         if (rememberMe) {
           storage.set(import.meta.env.VITE_AUTH_TOKEN, token)
         }
@@ -51,6 +45,12 @@ export default function Auth({ children }: AuthProps) {
     },
     [],
   )
+
+  const signUpWithEmail = useCallback(async (createUserDto: CreateUserDto) => {
+    const { user, token } = await registerUserByEmail(createUserDto)
+    setUser(user)
+    storage.set(import.meta.env.VITE_AUTH_TOKEN, token)
+  }, [])
 
   if (!authVerified) {
     return (
@@ -61,7 +61,7 @@ export default function Auth({ children }: AuthProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, signInWithEmail }}>
+    <AuthContext.Provider value={{ user, signInWithEmail, signUpWithEmail }}>
       {children}
     </AuthContext.Provider>
   )

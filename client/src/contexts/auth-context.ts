@@ -1,18 +1,18 @@
 import { createContext } from 'react'
-import { LoginDto, LoginResponseDto, UserWithoutSensitiveData } from 'api/api'
-import { UseMutateFunction } from 'react-query'
+import { CreateUserDto, LoginDto, UserWithoutSensitiveData } from 'api/api'
+
+type SignInCredentials = LoginDto & {
+  rememberMe: boolean
+}
 
 const AuthContext = createContext<{
   user?: UserWithoutSensitiveData | null
-  signInWithEmail: UseMutateFunction<
-    LoginResponseDto & { rememberMe: boolean },
-    unknown,
-    LoginDto & { rememberMe: boolean },
-    unknown
-  >
+  signInWithEmail: (credentials: SignInCredentials) => void
+  signUpWithEmail: (credentials: CreateUserDto) => void
 }>({
   user: null,
   signInWithEmail: () => {},
+  signUpWithEmail: () => {},
 })
 
 export default AuthContext
