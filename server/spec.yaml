@@ -83,7 +83,11 @@ paths:
               $ref: '#/components/schemas/CreateUserDto'
       responses:
         '201':
-          description: ''
+          description: Creates a new user in DB and returns user object and auth token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDto'
   /users/me:
     get:
       operationId: UserController_findCurrentUser

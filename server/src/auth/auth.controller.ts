@@ -21,6 +21,12 @@ export class AuthController {
   }
 
   @Post('signup')
+  @ApiResponse({
+    status: 201,
+    type: LoginResponseDto,
+    description:
+      'Creates a new user in DB and returns user object and auth token',
+  })
   createUser(
     @Body() createUserDto: CreateUserDto,
   ): Promise<{ token: string; user: UserWithoutSensitiveData }> {
