@@ -21,3 +21,12 @@ export class CreateUserDto {
   })
   password: string
 }
+
+export class UserWithoutSensitiveData {
+  id: string
+  name: string
+  email: string
+  createdAt: Date
+  updatedAt: Date
+  profileImage: string | null
+}

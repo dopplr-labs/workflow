@@ -1,9 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { CreateUserDto } from 'src/users/user.dto'
-import { UserWithoutSensitiveData } from 'src/users/user.type'
+import { CreateUserDto, UserWithoutSensitiveData } from 'src/users/user.dto'
 import { UsersService } from 'src/users/users.service'
-import { LoginDto } from './auth.dto'
+import { LoginDto, LoginResponseDto } from './auth.dto'
 import { JwtPayload } from './auth.type'
 
 @Injectable()
@@ -13,9 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(
-    loginDto: LoginDto,
-  ): Promise<{ user: UserWithoutSensitiveData; token: string }> {
+  async login(loginDto: LoginDto): Promise<LoginResponseDto> {
     const user = await this.usersService.validateUser(
       loginDto.email,
       loginDto.password,

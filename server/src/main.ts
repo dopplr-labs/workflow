@@ -9,7 +9,15 @@ const yaml = require('js-yaml')
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  const config = new DocumentBuilder().setTitle('Workflow API').build()
+  app.enableCors({
+    origin: '*',
+  })
+
+  const config = new DocumentBuilder()
+    .setTitle('Workflow API')
+    .addServer('http://localhost:3001')
+    .addBearerAuth()
+    .build()
   const document = SwaggerModule.createDocument(app, config)
   const outputPath = resolve(process.cwd(), 'spec.yaml')
   writeFileSync(outputPath, yaml.dump(document), 'utf8')

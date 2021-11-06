@@ -5,6 +5,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator'
+import { UserWithoutSensitiveData } from 'src/users/user.dto'
 
 export class LoginDto {
   @IsEmail()
@@ -17,4 +18,10 @@ export class LoginDto {
     message: 'password too weak',
   })
   password: string
+}
+
+export class LoginResponseDto {
+  user: UserWithoutSensitiveData
+
+  token: string
 }

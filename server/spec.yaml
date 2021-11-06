@@ -7,12 +7,22 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
     post:
       operationId: IssuesController_addIssue
       parameters: []
       responses:
         '201':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
   /issues/{id}:
     get:
       operationId: IssuesController_getIssue
@@ -25,6 +35,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
     delete:
       operationId: IssuesController_deleteIssue
       parameters:
@@ -36,6 +50,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
   /auth/login:
     post:
       operationId: AuthController_login
@@ -48,7 +66,11 @@ paths:
               $ref: '#/components/schemas/LoginDto'
       responses:
         '201':
-          description: ''
+          description: Returns user object and auth token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDto'
   /auth/signup:
     post:
       operationId: AuthController_createUser
@@ -62,14 +84,46 @@ paths:
       responses:
         '201':
           description: ''
+  /users/me:
+    get:
+      operationId: UserController_findCurrentUser
+      parameters: []
+      responses:
+        '200':
+          description: Me endpoint to validate auth token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWithoutSensitiveData'
+      security:
+        - bearer: []
+  /users:
+    get:
+      operationId: UserController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserWithoutSensitiveData'
 info:
   title: Workflow API
   description: ''
   version: 1.0.0
   contact: {}
 tags: []
-servers: []
+servers:
+  - url: http://localhost:3001
 components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
   schemas:
     LoginDto:
       type: object
@@ -83,6 +137,41 @@ components:
       required:
         - email
         - password
+    UserWithoutSensitiveData:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        profileImage:
+          type: string
+          nullable: true
+      required:
+        - id
+        - name
+        - email
+        - createdAt
+        - updatedAt
+        - profileImage
+    LoginResponseDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserWithoutSensitiveData'
+        token:
+          type: string
+      required:
+        - user
+        - token
     CreateUserDto:
       type: object
       properties:

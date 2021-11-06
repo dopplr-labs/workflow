@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'
-import { UserWithoutSensitiveData } from 'src/users/user.type'
+import { UserWithoutSensitiveData } from 'src/users/user.dto'
 import { AuthService } from './auth.service'
 import { JwtPayload } from './auth.type'
 
