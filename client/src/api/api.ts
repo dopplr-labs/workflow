@@ -406,7 +406,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerCreateUser(createUserDto: CreateUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async authControllerCreateUser(createUserDto: CreateUserDto, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerCreateUser(createUserDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -492,7 +492,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerCreateUser(createUserDto: CreateUserDto, options?: any): AxiosPromise<void> {
+        authControllerCreateUser(createUserDto: CreateUserDto, options?: any): AxiosPromise<LoginResponseDto> {
             return localVarFp.authControllerCreateUser(createUserDto, options).then((request) => request(axios, basePath));
         },
         /**
