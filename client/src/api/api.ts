@@ -73,16 +73,59 @@ export interface LoginDto {
 export interface LoginResponseDto {
     /**
      * 
-     * @type {object}
+     * @type {UserWithoutSensitiveData}
      * @memberof LoginResponseDto
      */
-    user: object;
+    user: UserWithoutSensitiveData;
     /**
      * 
      * @type {string}
      * @memberof LoginResponseDto
      */
     token: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserWithoutSensitiveData
+ */
+export interface UserWithoutSensitiveData {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserWithoutSensitiveData
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserWithoutSensitiveData
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserWithoutSensitiveData
+     */
+    email: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserWithoutSensitiveData
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserWithoutSensitiveData
+     */
+    updatedAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserWithoutSensitiveData
+     */
+    profileImage: string | null;
 }
 
 /**
@@ -285,6 +328,68 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerFindAll: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerFindCurrentUser: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users/me`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -353,6 +458,24 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.issuesControllerGetIssues(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userControllerFindAll(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserWithoutSensitiveData>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerFindAll(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userControllerFindCurrentUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWithoutSensitiveData>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userControllerFindCurrentUser(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -414,6 +537,22 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         issuesControllerGetIssues(options?: any): AxiosPromise<Array<object>> {
             return localVarFp.issuesControllerGetIssues(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerFindAll(options?: any): AxiosPromise<Array<UserWithoutSensitiveData>> {
+            return localVarFp.userControllerFindAll(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userControllerFindCurrentUser(options?: any): AxiosPromise<UserWithoutSensitiveData> {
+            return localVarFp.userControllerFindCurrentUser(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -487,6 +626,26 @@ export class DefaultApi extends BaseAPI {
      */
     public issuesControllerGetIssues(options?: any) {
         return DefaultApiFp(this.configuration).issuesControllerGetIssues(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public userControllerFindAll(options?: any) {
+        return DefaultApiFp(this.configuration).userControllerFindAll(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public userControllerFindCurrentUser(options?: any) {
+        return DefaultApiFp(this.configuration).userControllerFindCurrentUser(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
