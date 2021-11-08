@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:Test12345@localhost:5432/workflow?schema=public"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -15,7 +15,7 @@ model User {
   name         String
   profileImage String?
   createdAt    DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  updatedAt    DateTime @updatedAt
 }
 
 model Issue {
