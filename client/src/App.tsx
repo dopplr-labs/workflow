@@ -1,4 +1,3 @@
-import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Auth from 'components/auth'
