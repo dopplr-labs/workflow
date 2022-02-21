@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  # database
+  postgres:
+    image: 'postgres:alpine'
+    environment:
+      # @TODO: Move to env
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: workflow
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
