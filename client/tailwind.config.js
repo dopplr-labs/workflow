@@ -1,8 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.tsx', './src/*.tsx'],
+  content: ['./src/**/*.tsx', './src/*.tsx'],
 
   theme: {
     extend: {
@@ -13,8 +12,4 @@ module.exports = {
   },
 
   plugins: [],
-
-  future: {
-    removeDeprecatedGapUtilities: true,
-  },
 }
