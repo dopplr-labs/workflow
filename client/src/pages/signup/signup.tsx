@@ -1,6 +1,6 @@
-import React from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { Form, Input, Button, Checkbox } from '@tail-kit/tail-kit'
+import { Button, Checkbox, Form, Input } from 'antd'
+import { ReactComponent as Logo } from 'assets/logo.svg'
 import useAuthContext from 'hooks/use-auth-context'
 
 export default function Signup() {
@@ -10,54 +10,59 @@ export default function Signup() {
     return <Navigate to="/all-issues" replace />
   }
 
-  const checkboxLabel = (
-    <span>
-      I agree to <span className="text-blue-600">Terms & conditions</span> and{' '}
-      <span className="text-blue-600">Privacy Policy</span>
-    </span>
-  )
-
   return (
-    <div className="flex items-center justify-center w-screen h-screen bg-gray-50">
-      <div className="flex flex-col items-center w-full max-w-md p-4 space-y-4">
-        <div className="flex items-center justify-center w-12 h-12 text-2xl font-semibold text-white bg-blue-600 rounded-lg">
-          W
-        </div>
-        <div className="!mb-8">
-          <p className="text-2xl font-bold text-gray-700 ">
-            Create a new user account
-          </p>
-          <p className="text-sm text-center">
-            Or{' '}
-            <Link
-              to="/login"
-              className="font-medium text-blue-600 hover:text-blue-700"
-            >
-              sign in to your account
-            </Link>
-          </p>
-        </div>
-        <Form
-          className="w-full px-8 py-12 bg-white rounded shadow-md"
-          layout={Form.Layout.VERTICAL}
-          onSubmit={signUpWithEmail}
-        >
-          <Form.Item name="name" label="Full Name">
-            <Input />
+    <div className="flex items-center justify-center w-screen h-screen text-white bg-slate-900">
+      <div className="flex flex-col items-center w-full max-w-lg p-8 space-y-6 rounded-lg bg-slate-800">
+        <Logo />
+        <p className="text-3xl font-semibold">Register</p>
+        <p className="text-sm text-slate-400">
+          Register on the internal platform
+        </p>
+
+        <Form className="w-full" onFinish={signUpWithEmail}>
+          <Form.Item
+            name="name"
+            rules={[{ required: true, message: 'Please enter your name' }]}
+          >
+            <Input placeholder="Full Name" />
           </Form.Item>
-          <Form.Item name="email" label="Email address">
-            <Input />
+          <Form.Item
+            name="email"
+            rules={[
+              { required: true, message: 'Please enter your email address' },
+            ]}
+          >
+            <Input placeholder="Email Address" />
           </Form.Item>
-          <Form.Item name="password" label="Password">
-            <Input type="password" />
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: 'Please enter your password' }]}
+          >
+            <Input.Password placeholder="Password" />
           </Form.Item>
           <Form.Item>
-            <Checkbox label={checkboxLabel} />
+            <Form.Item valuePropName="checked" noStyle>
+              <Checkbox defaultChecked />
+            </Form.Item>
+            <span className="ml-2">
+              I have read the{' '}
+              <span className="text-blue-500 hover:underline">
+                Terms and Conditions
+              </span>
+            </span>
           </Form.Item>
-          <Button className="w-full" type="submit" buttonType="primary">
-            Create my account
+          <Button block type="primary" htmlType="submit">
+            Register
           </Button>
         </Form>
+
+        <hr className="w-full my-4 border-slate-600" />
+        <Link
+          to="/login"
+          className="text-slate-400 hover:underline hover:text-slate-400"
+        >
+          Already have an account?
+        </Link>
       </div>
     </div>
   )

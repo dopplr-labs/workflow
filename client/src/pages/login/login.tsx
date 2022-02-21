@@ -71,14 +71,12 @@ export default function Login() {
           icon={<HiOutlineInformationCircle className="w-6 h-6" />}
         />
         <hr className="w-full my-4 border-slate-600" />
-        <div>
-          <Link
-            to="/sign-up"
-            className="text-slate-400 hover:underline hover:text-slate-400"
-          >
-            Create new account
-          </Link>
-        </div>
+        <Link
+          to="/sign-up"
+          className="text-slate-400 hover:underline hover:text-slate-400"
+        >
+          Create new account
+        </Link>
       </div>
     </div>
   )
