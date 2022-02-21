@@ -1,59 +1,5 @@
 openapi: 3.0.0
 paths:
-  /issues:
-    get:
-      operationId: IssuesController_getIssues
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-    post:
-      operationId: IssuesController_addIssue
-      parameters: []
-      responses:
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-  /issues/{id}:
-    get:
-      operationId: IssuesController_getIssue
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-    delete:
-      operationId: IssuesController_deleteIssue
-      parameters:
-        - name: id
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
   /auth/login:
     post:
       operationId: AuthController_login
@@ -114,6 +60,60 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UserWithoutSensitiveData'
+  /issues:
+    get:
+      operationId: IssuesController_getIssues
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+    post:
+      operationId: IssuesController_addIssue
+      parameters: []
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+  /issues/{id}:
+    get:
+      operationId: IssuesController_getIssue
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+    delete:
+      operationId: IssuesController_deleteIssue
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
 info:
   title: Workflow API
   description: ''
