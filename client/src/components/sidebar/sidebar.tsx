@@ -1,44 +1,80 @@
-import React from 'react'
+import { useState } from 'react'
+import clsx from 'clsx'
+import { NavLink } from 'react-router-dom'
+import { Button, Modal, Switch } from 'antd'
 import {
-  HiOutlineArchive,
-  HiOutlineBriefcase,
-  HiOutlineClock,
-  HiOutlineHome,
-  HiOutlineMenu,
-  HiOutlineUserCircle,
+  HiOutlinePaperClip,
+  HiOutlinePencilAlt,
+  HiOutlineServer,
+  HiOutlineX,
 } from 'react-icons/hi'
-
-const tabs = [
-  { label: 'All Issues', icon: HiOutlineHome },
-  { label: 'My Issues', icon: HiOutlineMenu },
-  { label: 'Assigned', icon: HiOutlineUserCircle },
-  { label: 'Closed', icon: HiOutlineArchive },
-  { label: 'Recent', icon: HiOutlineClock },
-]
+import { ReactComponent as Logo } from 'assets/logo.svg'
 
 export default function Sidebar() {
+  const [taskModalVisible, setTaskModalVisible] = useState(false)
+
   return (
-    <div className="w-64 h-full bg-gray-800 2xl:w-80">
-      <div className="flex items-center p-3 space-x-3 bg-gray-900">
-        <HiOutlineBriefcase className="w-8 h-8 text-red-500" />
-        <p className="text-lg font-semibold tracking-wider text-white">
-          workflow
-        </p>
+    <div className="flex-none w-64 h-full p-4 border-r border-slate-700">
+      <div className="flex items-center pr-4 mb-4">
+        <Logo className="w-6 h-6 mr-3" />
+        <p className="flex-1 font-mono font-semibold">Workflow</p>
       </div>
-      <ul className="py-3">
-        {tabs.map((tab, index) => {
-          const { icon: Icon } = tab
-          return (
-            <li
-              key={index}
-              className="flex items-center p-3 space-x-3 text-gray-400 rounded cursor-pointer hover:bg-gray-900 hover:text-white"
-            >
-              <Icon className="w-6 h-6" />
-              <span className="text-sm font-medium">{tab.label}</span>
-            </li>
+
+      <Button
+        block
+        size="small"
+        type="primary"
+        className="mb-4"
+        icon={<HiOutlinePencilAlt />}
+        onClick={() => setTaskModalVisible(true)}
+      >
+        New Issue
+      </Button>
+
+      <NavLink
+        to="/all-issues"
+        className={({ isActive }) =>
+          clsx(
+            'flex items-center w-full px-4 py-1 text-sm rounded-lg text-slate-400',
+            { 'bg-slate-700': isActive },
           )
-        })}
-      </ul>
+        }
+      >
+        <HiOutlineServer className="w-4 h-4" />
+        <span className="ml-2">Issues</span>
+      </NavLink>
+
+      <Modal
+        visible={taskModalVisible}
+        closeIcon={<HiOutlineX />}
+        onOk={() => setTaskModalVisible(true)}
+        onCancel={() => setTaskModalVisible(false)}
+        footer={
+          <div className="flex items-center space-x-4">
+            <button className="flex items-center justify-center p-2 rounded text-slate-100 hover:bg-slate-700 hover:text-white">
+              <HiOutlinePaperClip className="mx-0" />
+            </button>
+            <div className="flex-1" />
+            <label className="flex items-center space-x-2 text-xs">
+              <Switch size="small" />
+              <span>Create more</span>
+            </label>
+            <Button type="primary" size="small">
+              Save Issue
+            </Button>
+          </div>
+        }
+      >
+        <p className="mb-2 text-sm text-slate-300">Create New Issue</p>
+        <input
+          className="w-full mb-3 text-lg font-medium bg-slate-800 focus:outline-none"
+          placeholder="Issue title"
+        />
+        <input
+          className="w-full bg-slate-800 focus:outline-none"
+          placeholder="Add description..."
+        />
+      </Modal>
     </div>
   )
 }

@@ -21,7 +21,11 @@ export default function Login() {
         </p>
         <Form
           className="w-full"
-          initialValues={{ rememberMe: true }}
+          initialValues={{
+            email: 'demo@workflow.app',
+            password: 'Password123!',
+            rememberMe: true,
+          }}
           onFinish={signInWithEmail}
         >
           <Form.Item

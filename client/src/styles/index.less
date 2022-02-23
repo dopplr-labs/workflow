@@ -2,26 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '~antd/lib/style/themes/default.less';
+@import '~antd/lib/style/themes/compact.less';
 @import '~antd/dist/antd.dark.less';
 
-@font-size-base: 14px;
+@font-size-base: 13px;
 @height-base: 40px;
 @height-lg: 48px;
-@height-sm: 32px;
+@height-sm: 28px;
 @border-radius-base: 8px;
-@primary-color: #7582eb;
-@label-required-color: theme('colors.red.200');
-@layout-body-background: theme('colors.gray.50');
-@layout-header-background: theme('colors.gray.900');
-@layout-trigger-background: theme('colors.gray.900');
-@border-color-base: theme('colors.gray.200');
-@text-color: theme('colors.gray.200');
+@popover-background: theme('colors.slate.800');
+// @primary-color: #7582eb;;
+// @label-required-color: theme('colors.red.200');
+// @layout-body-background: theme('colors.gray.50');
+// @layout-header-background: theme('colors.gray.900');
+// @layout-trigger-background: theme('colors.gray.900');
+// @border-color-base: theme('colors.gray.200');
+// @text-color: theme('colors.gray.200');
 @font-family: theme('fontFamily.sans');
 
 @checkbox-border-radius: 2px;
 
 svg {
-  vertical-align: initial;
   display: inline;
+}
+
+button svg {
+  vertical-align: text-bottom;
+  margin-right: 4px;
+}
+
+li svg {
+  width: 18px;
+  height: 18px;
+}
+
+p {
+  margin-bottom: 0;
 }

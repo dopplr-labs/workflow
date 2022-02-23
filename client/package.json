@@ -9,8 +9,8 @@
     "api": "npx openapi-generator-cli generate -c oapi-generator-config.yaml -i ../server/spec.yaml -g typescript-axios -o src/api"
   },
   "dependencies": {
-    "@tail-kit/tail-kit": "^0.1.21",
     "antd": "^4.18.7",
+    "clsx": "^1.1.1",
     "dequal": "^2.0.2",
     "less": "^4.1.2",
     "react": "^17.0.2",
