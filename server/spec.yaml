@@ -76,13 +76,19 @@ paths:
     post:
       operationId: IssuesController_addIssue
       parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIssueDto'
       responses:
         '201':
-          description: ''
+          description: Creates a new issue in DB and returns issue object
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/Issue'
   /issues/{id}:
     get:
       operationId: IssuesController_getIssue
@@ -191,3 +197,95 @@ components:
         - name
         - email
         - password
+    CreateIssueDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - BACKLOG
+            - TODO
+            - INPROGRESS
+            - INREVIEW
+            - DONE
+            - CANCELLED
+        priority:
+          type: string
+          enum:
+            - NONE
+            - URGENT
+            - HIGH
+            - MEDIUM
+            - LOW
+        estimate:
+          type: string
+          enum:
+            - NONE
+            - XS
+            - S
+            - M
+            - L
+            - XL
+        title:
+          type: string
+        description:
+          type: string
+      required:
+        - status
+        - priority
+        - estimate
+        - title
+    Issue:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - BACKLOG
+            - TODO
+            - INPROGRESS
+            - INREVIEW
+            - DONE
+            - CANCELLED
+        priority:
+          type: string
+          enum:
+            - NONE
+            - URGENT
+            - HIGH
+            - MEDIUM
+            - LOW
+        estimate:
+          type: string
+          enum:
+            - NONE
+            - XS
+            - S
+            - M
+            - L
+            - XL
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        createdBy:
+          type: string
+      required:
+        - status
+        - priority
+        - estimate
+        - id
+        - title
+        - description
+        - createdAt
+        - updatedAt
+        - createdBy

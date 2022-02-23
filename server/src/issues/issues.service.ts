@@ -1,6 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common'
-import { Issue as IssueModel } from '@prisma/client'
+import { Issue as IssueModel, User } from '@prisma/client'
 import { PrismaService } from 'src/prisma.service'
+import { CreateIssueDto } from './issues.dto'
 
 @Injectable()
 export class IssuesService {
@@ -18,8 +19,10 @@ export class IssuesService {
     return issue
   }
 
-  async addIssue(issue: any): Promise<IssueModel> {
-    const newIssue = await this.prismaService.issue.create({ data: issue })
+  async addIssue(issue: CreateIssueDto, user: User): Promise<IssueModel> {
+    const newIssue = await this.prismaService.issue.create({
+      data: { ...issue, user: { connect: { id: user.id } } },
+    })
     return newIssue
   }
 

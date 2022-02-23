@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "commit": "cz",
-    "start:server": "yarn workspace @workflow/server start",
+    "start:server": "yarn workspace @workflow/server start:dev",
     "start:client": "yarn workspace @workflow/client dev",
     "lint": "eslint --no-error-on-unmatched-pattern --fix --ext .js,.ts,.tsx .",
     "format": "prettier --no-error-on-unmatched-pattern --write *.{ts,js} server/**/*.{ts,js} client/**/*.{ts,tsx}"
