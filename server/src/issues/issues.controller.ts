@@ -7,7 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common'
-import { ApiResponse } from '@nestjs/swagger'
+import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger'
 import { User } from '@prisma/client'
 import { GetUser } from 'src/auth/get-user.decorator'
 import { JwtGuard } from 'src/auth/jwt.guard'
@@ -20,20 +20,25 @@ export class IssuesController {
   constructor(private readonly issuesService: IssuesService) {}
 
   @Get()
-  async getIssues() {
-    const issues = await this.issuesService.getIssues()
+  @ApiOkResponse({
+    type: Issue,
+    isArray: true,
+    description: 'Fetch all issues for a user',
+  })
+  async getIssues(@GetUser() user: User) {
+    const issues = await this.issuesService.getIssues(user)
     return issues
   }
 
   @Get(':id')
-  async getIssue(@Param('id') id: string) {
-    const issue = await this.issuesService.getIssue(id)
+  @ApiOkResponse({ type: Issue, description: 'Fetch issue by id' })
+  async getIssue(@Param('id') id: string, @GetUser() user: User) {
+    const issue = await this.issuesService.getIssue(id, user)
     return issue
   }
 
   @Post()
-  @ApiResponse({
-    status: 201,
+  @ApiCreatedResponse({
     type: Issue,
     description: 'Creates a new issue in DB and returns issue object',
   })

@@ -20,15 +20,15 @@ model User {
 }
 
 model Issue {
-  id          String   @id @default(cuid())
+  id          String         @id @default(cuid())
   title       String
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  status      IssueStatus
-  priority    IssuePriority
-  estimate    IssueEstimate
-  user        User  @relation(fields: [createdBy], references: [id])
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  status      IssueStatus?   @default(BACKLOG)
+  priority    IssuePriority? @default(NONE)
+  estimate    IssueEstimate? @default(NONE)
+  user        User           @relation(fields: [createdBy], references: [id])
   createdBy   String
 }
 

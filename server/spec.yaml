@@ -66,13 +66,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Fetch all issues for a user
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: object
+                  $ref: '#/components/schemas/Issue'
     post:
       operationId: IssuesController_addIssue
       parameters: []
@@ -100,11 +100,11 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Fetch issue by id
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/Issue'
     delete:
       operationId: IssuesController_deleteIssue
       parameters:
@@ -197,44 +197,6 @@ components:
         - name
         - email
         - password
-    CreateIssueDto:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-            - BACKLOG
-            - TODO
-            - INPROGRESS
-            - INREVIEW
-            - DONE
-            - CANCELLED
-        priority:
-          type: string
-          enum:
-            - NONE
-            - URGENT
-            - HIGH
-            - MEDIUM
-            - LOW
-        estimate:
-          type: string
-          enum:
-            - NONE
-            - XS
-            - S
-            - M
-            - L
-            - XL
-        title:
-          type: string
-        description:
-          type: string
-      required:
-        - status
-        - priority
-        - estimate
-        - title
     Issue:
       type: object
       properties:
@@ -289,3 +251,41 @@ components:
         - createdAt
         - updatedAt
         - createdBy
+    CreateIssueDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - BACKLOG
+            - TODO
+            - INPROGRESS
+            - INREVIEW
+            - DONE
+            - CANCELLED
+        priority:
+          type: string
+          enum:
+            - NONE
+            - URGENT
+            - HIGH
+            - MEDIUM
+            - LOW
+        estimate:
+          type: string
+          enum:
+            - NONE
+            - XS
+            - S
+            - M
+            - L
+            - XL
+        title:
+          type: string
+        description:
+          type: string
+      required:
+        - status
+        - priority
+        - estimate
+        - title

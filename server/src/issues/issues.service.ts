@@ -7,15 +7,27 @@ import { CreateIssueDto } from './issues.dto'
 export class IssuesService {
   constructor(private prismaService: PrismaService) {}
 
-  getIssues(): Promise<IssueModel[]> {
-    return this.prismaService.issue.findMany()
+  getIssues(user: User): Promise<IssueModel[]> {
+    return this.prismaService.issue.findMany({
+      where: { user: { id: user.id } },
+      orderBy: { createdAt: 'desc' },
+    })
   }
 
-  async getIssue(id: string): Promise<IssueModel> {
-    const issue = await this.prismaService.issue.findUnique({ where: { id } })
+  async getIssue(id: string, user: User): Promise<IssueModel> {
+    const issue = await this.prismaService.issue.findUnique({
+      where: { id },
+      include: { user: true },
+    })
+
     if (!issue) {
       throw new HttpException('Issue not found', 404)
     }
+
+    if (issue.user.id !== user.id) {
+      throw new HttpException('Not authorized to access', 403)
+    }
+
     return issue
   }
 
