@@ -7,7 +7,10 @@ import Login from 'pages/login'
 import Signup from 'pages/signup'
 
 export default function App() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { refetchOnWindowFocus: false } },
+  })
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

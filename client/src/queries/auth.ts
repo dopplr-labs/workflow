@@ -1,12 +1,12 @@
-import { Api, Config } from 'api'
+import { DefaultApi, Configuration } from 'api'
 import { CreateUserDto, LoginDto } from 'api/api'
 import storage from 'utils/storage'
 
 export const fetchUserProfile = async () => {
   const accessToken = storage.get(import.meta.env.VITE_AUTH_TOKEN)
   if (accessToken) {
-    const configOptions = new Config.Configuration({ accessToken })
-    const authenticatedApiService = new Api.DefaultApi(configOptions)
+    const configOptions = new Configuration({ accessToken })
+    const authenticatedApiService = new DefaultApi(configOptions)
     const { data } =
       await authenticatedApiService.userControllerFindCurrentUser()
     return data
@@ -14,8 +14,8 @@ export const fetchUserProfile = async () => {
   return null
 }
 
-const configOptions = new Config.Configuration()
-const apiService = new Api.DefaultApi(configOptions)
+const configOptions = new Configuration()
+const apiService = new DefaultApi(configOptions)
 
 export const fetchUserProfileByEmail = async (loginDto: LoginDto) => {
   const { data } = await apiService.authControllerLogin(loginDto)

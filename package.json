@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "commit": "cz",
+    "api": "yarn workspace @workflow/client api",
     "start:server": "yarn workspace @workflow/server start:dev",
     "start:client": "yarn workspace @workflow/client dev",
     "lint": "eslint --no-error-on-unmatched-pattern --fix --ext .js,.ts,.tsx .",
@@ -15,16 +16,16 @@
     "server"
   ],
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.31.0",
-    "@typescript-eslint/parser": "^4.31.0",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.10.0",
     "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-react": "^7.25.1",
-    "prettier": "^2.3.2"
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.29.2",
+    "prettier": "^2.5.1"
   },
   "config": {
     "commitizen": {

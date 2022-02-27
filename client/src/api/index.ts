@@ -12,5 +12,5 @@
  * Do not edit the class manually.
  */
 
-export * as Api from './api'
-export * as Config from './configuration'
+export * from './api'
+export * from './configuration'

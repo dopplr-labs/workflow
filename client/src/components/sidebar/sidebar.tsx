@@ -14,7 +14,7 @@ export default function Sidebar() {
   const [taskModalVisible, setTaskModalVisible] = useState(false)
 
   return (
-    <div className="flex-none w-64 h-full p-4 border-r border-slate-700">
+    <div className="flex-none w-64 p-4 border-r border-slate-700">
       <div className="flex items-center pr-4 mb-4">
         <Logo className="w-6 h-6 mr-3" />
         <p className="flex-1 font-mono font-semibold">Workflow</p>
