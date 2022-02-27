@@ -1,14 +1,10 @@
 import { useState } from 'react'
 import clsx from 'clsx'
+import { Button } from 'antd'
 import { NavLink } from 'react-router-dom'
-import { Button, Modal, Switch } from 'antd'
-import {
-  HiOutlinePaperClip,
-  HiOutlinePencilAlt,
-  HiOutlineServer,
-  HiOutlineX,
-} from 'react-icons/hi'
+import { HiOutlinePencilAlt, HiOutlineServer } from 'react-icons/hi'
 import { ReactComponent as Logo } from 'assets/logo.svg'
+import CreateTaskModal from './create-task-modal'
 
 export default function Sidebar() {
   const [taskModalVisible, setTaskModalVisible] = useState(false)
@@ -44,37 +40,10 @@ export default function Sidebar() {
         <span className="ml-2">Issues</span>
       </NavLink>
 
-      <Modal
-        visible={taskModalVisible}
-        closeIcon={<HiOutlineX />}
-        onOk={() => setTaskModalVisible(true)}
-        onCancel={() => setTaskModalVisible(false)}
-        footer={
-          <div className="flex items-center space-x-4">
-            <button className="flex items-center justify-center p-2 rounded text-slate-100 hover:bg-slate-700 hover:text-white">
-              <HiOutlinePaperClip className="mx-0" />
-            </button>
-            <div className="flex-1" />
-            <label className="flex items-center space-x-2 text-xs">
-              <Switch size="small" />
-              <span>Create more</span>
-            </label>
-            <Button type="primary" size="small">
-              Save Issue
-            </Button>
-          </div>
-        }
-      >
-        <p className="mb-2 text-sm text-slate-300">Create New Issue</p>
-        <input
-          className="w-full mb-3 text-lg font-medium bg-slate-800 focus:outline-none"
-          placeholder="Issue title"
-        />
-        <input
-          className="w-full bg-slate-800 focus:outline-none"
-          placeholder="Add description..."
-        />
-      </Modal>
+      <CreateTaskModal
+        isVisible={taskModalVisible}
+        setIsVisible={setTaskModalVisible}
+      />
     </div>
   )
 }

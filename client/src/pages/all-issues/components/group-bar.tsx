@@ -7,8 +7,10 @@ type GroupBarProps = {
 }
 
 export default function GroupBar({ status }: GroupBarProps) {
-  const statusIconAndText = useMemo(() => {
+  const statusText = useMemo(() => {
     switch (status) {
+      case IssueStatusEnum.Todo:
+        return 'Todo'
       case IssueStatusEnum.Backlog:
         return 'Backlog'
       case IssueStatusEnum.Inprogress:
@@ -25,7 +27,7 @@ export default function GroupBar({ status }: GroupBarProps) {
   return (
     <div className="flex items-center px-6 py-2 space-x-2 bg-slate-800">
       {getIconByStatus(status)}
-      <span>{statusIconAndText}</span>
+      <span>{statusText}</span>
     </div>
   )
 }

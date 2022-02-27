@@ -4,9 +4,12 @@ import { ReactComponent as CancelledIcon } from 'assets/cancelled.svg'
 import { ReactComponent as DoneIcon } from 'assets/done.svg'
 import { ReactComponent as ProgressIcon } from 'assets/progress.svg'
 import { ReactComponent as ReviewIcon } from 'assets/review.svg'
+import { ReactComponent as TodoIcon } from 'assets/todo.svg'
 
 export function getIconByStatus(status: IssueStatusEnum) {
   switch (status) {
+    case IssueStatusEnum.Todo:
+      return <TodoIcon />
     case IssueStatusEnum.Backlog:
       return <BacklogIcon />
     case IssueStatusEnum.Inprogress:

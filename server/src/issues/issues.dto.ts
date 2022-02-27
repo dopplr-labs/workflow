@@ -6,13 +6,13 @@ export class CreateIssueDto {
   description?: string
 
   @ApiProperty({ enum: IssueStatus })
-  status: IssueStatus
+  status?: IssueStatus
 
   @ApiProperty({ enum: IssuePriority })
-  priority: IssuePriority
+  priority?: IssuePriority
 
   @ApiProperty({ enum: IssueEstimate })
-  estimate: IssueEstimate
+  estimate?: IssueEstimate
 }
 
 export class Issue {

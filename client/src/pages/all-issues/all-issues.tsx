@@ -17,6 +17,7 @@ export default function AllIssues() {
   const sortBy = [
     IssueStatusEnum.Inreview,
     IssueStatusEnum.Inprogress,
+    IssueStatusEnum.Todo,
     IssueStatusEnum.Backlog,
     IssueStatusEnum.Done,
     IssueStatusEnum.Cancelled,

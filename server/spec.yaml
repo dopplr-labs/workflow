@@ -285,7 +285,4 @@ components:
         description:
           type: string
       required:
-        - status
-        - priority
-        - estimate
         - title
