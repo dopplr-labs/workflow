@@ -16,7 +16,9 @@ jobs:
         id: cache-node-modules
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: |
+            node_modules
+            client/node_modules
           key: node_modules-${{hashFiles('yarn.lock')}}
           restore-keys: node_modules-
 
