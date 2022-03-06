@@ -5,7 +5,7 @@ type CustomSortOptions = {
 }
 
 function customSort({ data, sortBy, sortField }: CustomSortOptions) {
-  const sortByObject: { [key: string]: number } = sortBy.reduce(
+  const sortByObject: Record<string, number> = sortBy.reduce(
     (acc, curr, index) => ({ ...acc, [curr]: index }),
     {},
   )
