@@ -1,8 +1,15 @@
 import { useMemo, useState } from 'react'
-import { Button, Modal, Switch } from 'antd'
+import { Button, Modal, Select, Switch } from 'antd'
 import { useMutation, useQueryClient } from 'react-query'
 import { HiOutlinePaperClip, HiOutlineX } from 'react-icons/hi'
 import { createIssue } from 'queries/issues'
+import { CreateIssueDtoStatusEnum, IssueStatusEnum } from 'api'
+import { ReactComponent as BacklogIcon } from 'assets/backlog.svg'
+import { ReactComponent as CancelledIcon } from 'assets/cancelled.svg'
+import { ReactComponent as DoneIcon } from 'assets/done.svg'
+import { ReactComponent as ProgressIcon } from 'assets/progress.svg'
+import { ReactComponent as ReviewIcon } from 'assets/review.svg'
+import { ReactComponent as TodoIcon } from 'assets/todo.svg'
 
 type CreateTaskModalProps = {
   isVisible: boolean
@@ -14,6 +21,7 @@ export default function CreateTaskModal({
   setIsVisible,
 }: CreateTaskModalProps) {
   const [title, setTitle] = useState('')
+  const [status, setStatus] = useState(CreateIssueDtoStatusEnum.Backlog)
   const queryClient = useQueryClient()
 
   const { mutate, isLoading } = useMutation(createIssue, {
@@ -39,13 +47,13 @@ export default function CreateTaskModal({
           type="primary"
           size="small"
           loading={isLoading}
-          onClick={() => mutate({ title })}
+          onClick={() => mutate({ title, status })}
         >
           Save Issue
         </Button>
       </div>
     ),
-    [isLoading, mutate, title],
+    [isLoading, mutate, title, status],
   )
 
   return (
@@ -65,9 +73,62 @@ export default function CreateTaskModal({
         className="w-full mb-3 text-base bg-slate-800 focus:outline-none"
       />
       <input
-        className="w-full bg-slate-800 focus:outline-none"
+        className="w-full mb-3 bg-slate-800 focus:outline-none"
         placeholder="Add description..."
       />
+      <div className="flex items-center space-x-4">
+        <Select
+          size="small"
+          value={status}
+          bordered={false}
+          showArrow={false}
+          onChange={setStatus}
+          dropdownMatchSelectWidth={180}
+          className="rounded-md bg-slate-700/80"
+        >
+          <Select.Option value={IssueStatusEnum.Backlog}>
+            <div className="flex items-center space-x-2">
+              <BacklogIcon />
+              <span>Backlog</span>
+            </div>
+          </Select.Option>
+
+          <Select.Option value={IssueStatusEnum.Todo}>
+            <div className="flex items-center space-x-2">
+              <TodoIcon />
+              <span>Todo</span>
+            </div>
+          </Select.Option>
+
+          <Select.Option value={IssueStatusEnum.Inprogress}>
+            <div className="flex items-center space-x-2">
+              <ProgressIcon />
+              <span>In Progress</span>
+            </div>
+          </Select.Option>
+
+          <Select.Option value={IssueStatusEnum.Inreview}>
+            <div className="flex items-center space-x-2">
+              <ReviewIcon />
+              <span>In Review</span>
+            </div>
+          </Select.Option>
+
+          <Select.Option value={IssueStatusEnum.Done}>
+            <div className="flex items-center space-x-2">
+              <DoneIcon />
+              <span>Done</span>
+            </div>
+          </Select.Option>
+
+          <Select.Option value={IssueStatusEnum.Cancelled}>
+            <div className="flex items-center space-x-2">
+              <CancelledIcon />
+              <span>Cancelled</span>
+            </div>
+          </Select.Option>
+        </Select>
+      </div>
     </Modal>
   )
 }
