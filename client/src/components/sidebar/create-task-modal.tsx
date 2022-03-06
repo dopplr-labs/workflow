@@ -29,6 +29,7 @@ export default function CreateTaskModal({
       queryClient.invalidateQueries('issues')
       setIsVisible(false)
       setTitle('')
+      setStatus(CreateIssueDtoStatusEnum.Backlog)
     },
   })
 
