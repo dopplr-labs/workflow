@@ -4,32 +4,30 @@ import { useMutation, useQueryClient } from 'react-query'
 import { HiOutlinePaperClip, HiOutlineX } from 'react-icons/hi'
 import { createIssue } from 'queries/issues'
 import { CreateIssueDtoStatusEnum, IssueStatusEnum } from 'api'
-import { ReactComponent as BacklogIcon } from 'assets/backlog.svg'
-import { ReactComponent as CancelledIcon } from 'assets/cancelled.svg'
-import { ReactComponent as DoneIcon } from 'assets/done.svg'
-import { ReactComponent as ProgressIcon } from 'assets/progress.svg'
-import { ReactComponent as ReviewIcon } from 'assets/review.svg'
-import { ReactComponent as TodoIcon } from 'assets/todo.svg'
+import taskStatus from '../../constants/issue-status'
 
 type CreateTaskModalProps = {
   isVisible: boolean
   setIsVisible: (visible: boolean) => void
 }
 
+const initialTaskState = {
+  title: '',
+  status: CreateIssueDtoStatusEnum.Backlog,
+}
+
 export default function CreateTaskModal({
   isVisible,
   setIsVisible,
 }: CreateTaskModalProps) {
-  const [title, setTitle] = useState('')
-  const [status, setStatus] = useState(CreateIssueDtoStatusEnum.Backlog)
-  const queryClient = useQueryClient()
+  const [{ title, status }, setTask] = useState(initialTaskState)
 
+  const queryClient = useQueryClient()
   const { mutate, isLoading } = useMutation(createIssue, {
     onSuccess: () => {
       queryClient.invalidateQueries('issues')
       setIsVisible(false)
-      setTitle('')
-      setStatus(CreateIssueDtoStatusEnum.Backlog)
+      setTask(initialTaskState)
     },
   })
 
@@ -70,7 +68,9 @@ export default function CreateTaskModal({
       <input
         value={title}
         placeholder="Issue title"
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={({ target: { value } }) =>
+          setTask((prevState) => ({ ...prevState, title: value }))
+        }
         className="w-full mb-3 text-base bg-slate-800 focus:outline-none"
       />
       <input
@@ -83,51 +83,23 @@ export default function CreateTaskModal({
           value={status}
           bordered={false}
           showArrow={false}
-          onChange={setStatus}
+          onChange={(value) =>
+            setTask((prevState) => ({ ...prevState, status: value }))
+          }
           dropdownMatchSelectWidth={180}
           className="rounded-md bg-slate-700/80"
         >
-          <Select.Option value={IssueStatusEnum.Backlog}>
-            <div className="flex items-center space-x-2">
-              <BacklogIcon />
-              <span>Backlog</span>
-            </div>
-          </Select.Option>
-
-          <Select.Option value={IssueStatusEnum.Todo}>
-            <div className="flex items-center space-x-2">
-              <TodoIcon />
-              <span>Todo</span>
-            </div>
-          </Select.Option>
-
-          <Select.Option value={IssueStatusEnum.Inprogress}>
-            <div className="flex items-center space-x-2">
-              <ProgressIcon />
-              <span>In Progress</span>
-            </div>
-          </Select.Option>
-
-          <Select.Option value={IssueStatusEnum.Inreview}>
-            <div className="flex items-center space-x-2">
-              <ReviewIcon />
-              <span>In Review</span>
-            </div>
-          </Select.Option>
-
-          <Select.Option value={IssueStatusEnum.Done}>
-            <div className="flex items-center space-x-2">
-              <DoneIcon />
-              <span>Done</span>
-            </div>
-          </Select.Option>
-
-          <Select.Option value={IssueStatusEnum.Cancelled}>
-            <div className="flex items-center space-x-2">
-              <CancelledIcon />
-              <span>Cancelled</span>
-            </div>
-          </Select.Option>
+          {Object.keys(taskStatus).map((status) => {
+            const { title, icon: Icon } = taskStatus[status as IssueStatusEnum]
+            return (
+              <Select.Option key={status}>
+                <div className="flex items-center h-full space-x-2">
+                  <Icon />
+                  <span>{title}</span>
+                </div>
+              </Select.Option>
+            )
+          })}
         </Select>
       </div>
     </Modal>

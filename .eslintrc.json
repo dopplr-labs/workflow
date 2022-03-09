@@ -31,10 +31,7 @@
     "react/no-unknown-property": "error",
     "react/prop-types": "off",
     "import/un-resolved": "off",
-    "import/order": [
-      "error",
-      { "groups": ["builtin", "external", "internal"] }
-    ],
+    "import/order": ["off", { "groups": ["builtin", "external", "internal"] }],
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "no-use-before-define": "off",
